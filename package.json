@@ -1,0 +1,20 @@
+{
+  "name": "cordova-amap-locate",
+  "version": "1.0.0",
+  "description": "cordova 高德地图定位SDK，支持Ionic",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/van-team/cordova-amap-locate.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "-kain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/van-team/cordova-amap-locate/issues"
+  },
+  "homepage": "https://github.com/van-team/cordova-amap-locate#readme"
+}

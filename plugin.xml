@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-amap-locate" version="1.0.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>AMapLocate</name>
+    <preference name="ANDROID_KEY"/>
+    <preference name="IOS_KEY"/>
+    <platform name="android">
+        <js-module name="locate" src="www/android/locate.js">
+            <clobbers target="cordova.plugins.locate"/>
+        </js-module>
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="AMapLocate">
+                <param name="android-package" value="kain.amap.locate.AMapLocatePlugin"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+            <uses-permission android:name="android.permission.BLUETOOTH"/>
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+        </config-file>
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <meta-data android:name="com.amap.api.v2.apikey" android:value="$ANDROID_KEY"/>
+            <service android:name="com.amap.api.location.APSService"/>
+        </config-file>
+        <source-file src="src/android/AMapLocatePlugin.java" target-dir="src/kain/amap/locate"/>
+        <lib-file src="src/lib/AMap_Location_V4.0.1_20180426.jar"/>
+        <lib-file src="src/lib/rxjava-2.1.14.jar"/>
+    </platform>
+    <platform name="ios">
+        <dependency id="cordova-plugin-cocoapod-support"/>
+        <js-module name="locate" src="www/ios/locate.js">
+            <clobbers target="cordova.plugins.locate"/>
+        </js-module>
+        <config-file parent="/*" target="config.xml">
+            <feature name="AMapLocate">
+                <param name="ios-package" value="AMapLocatePlugin"/>
+            </feature>
+        </config-file>
+        <config-file parent="NSLocationWhenInUseUsageDescription" target="*-Info.plist">
+            <string>YES</string>
+        </config-file>
+        <config-file parent="NSLocationAlwaysUsageDescription" target="*-Info.plist">
+            <string>Always</string>
+        </config-file>
+        <config-file parent="AMapServicesKey" target="*-Info.plist">
+            <string>$IOS_KEY</string>
+        </config-file>
+        <source-file src="src/ios/AMapLocatePlugin.swift"/>
+        <pod name="AMap3DMap"/>
+        <pod name="AMapLocation"/>
+    </platform>
+</plugin>

@@ -11,7 +11,7 @@
         </js-module>
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="AMapLocate">
-                <param name="android-package" value="kain.amap.locate.AMapLocatePlugin"/>
+                <param name="android-package" value="van.amap.locate.AMapLocatePlugin"/>
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
@@ -31,12 +31,12 @@
             <meta-data android:name="com.amap.api.v2.apikey" android:value="$ANDROID_KEY"/>
             <service android:name="com.amap.api.location.APSService"/>
         </config-file>
-        <source-file src="src/android/AMapLocatePlugin.java" target-dir="src/kain/amap/locate"/>
-        <lib-file src="src/lib/AMap_Location_V4.0.1_20180426.jar"/>
-        <lib-file src="src/lib/rxjava-2.1.14.jar"/>
+        <framework src="com.android.support:appcompat-v7:26+" />
+        <framework src="io.reactivex.rxjava2:rxjava:2.1.14" />
+        <framework src="com.amap.api:location:latest.integration" />
+        <source-file src="src/android/AMapLocatePlugin.kt" target-dir="app/src/main/java/van/amap/locate"/>
     </platform>
     <platform name="ios">
-        <dependency id="cordova-plugin-cocoapod-support"/>
         <js-module name="locate" src="www/ios/locate.js">
             <clobbers target="cordova.plugins.locate"/>
         </js-module>
@@ -55,7 +55,5 @@
             <string>$IOS_KEY</string>
         </config-file>
         <source-file src="src/ios/AMapLocatePlugin.swift"/>
-        <pod name="AMap3DMap"/>
-        <pod name="AMapLocation"/>
     </platform>
 </plugin>

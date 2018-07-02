@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
+import {Injectable} from '@angular/core';
+import {Cordova, Plugin, IonicNativePlugin} from '@ionic-native/core';
 
 @Plugin({
   pluginName: 'AMapLocate',
@@ -15,3 +15,4 @@ export class AMapLocate extends IonicNativePlugin {
     return;
   }
 }
+

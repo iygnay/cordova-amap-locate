@@ -15,4 +15,3 @@ export class AMapLocate extends IonicNativePlugin {
     return;
   }
 }
-

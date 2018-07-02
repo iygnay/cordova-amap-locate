@@ -1,5 +1,6 @@
 # cordova-amap-locate
 
+
 ## Install AMap SDK Plugin
 
 ``` shell

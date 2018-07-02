@@ -1,5 +1,7 @@
 # cordova-amap-locate
 
+[![npm](https://img.shields.io/npm/v/cordova-amap-locate.svg)](https://www.npmjs.com/package/ccordova-amap-locate) 
+[![npm](https://img.shields.io/npm/dm/cordova-amap-locate.svg)](https://www.npmjs.com/package/cordova-amap-locate)
 
 ## Install AMap SDK Plugin
 
@@ -75,4 +77,36 @@ cordova.plugins.locate.getCurrentPosition(function (latlng) {
 
 ## Used in Ionic
 
-> Later Update
+###  Modify the project app.module.ts
+
+``` typescript
+import {AMapLocate} from 'cordova-amap-locate/ionic-native';
+
+@NgModule({
+  ...
+  providers: [
+    ...
+    AMapLocate,
+    ...
+  ]
+})
+```
+
+### Use Native
+
+``` typescript
+import {AMapLocate} from 'cordova-amap-locate/ionic-native';
+
+export class MyApp {
+    constructor(platform: Platform,
+                amapLocate: AMapLocate) {
+        platform.ready().then(() => {
+            amapLocate.getCurrentPosition().then(lnglat => {
+                alert(JSON.stringify(lnglat))
+            });
+        });
+    }
+}
+```
+
+

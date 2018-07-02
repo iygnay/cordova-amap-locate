@@ -1,6 +1,6 @@
 {
   "name": "cordova-amap-locate",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cordova&Ionic 高德地图 Location SDK",
   "repository": {
     "type": "git",
@@ -9,7 +9,9 @@
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-ios"
+    "cordova-ios",
+    "amap-sdk",
+    "location"
   ],
   "author": "-kain",
   "license": "MIT",

@@ -1,7 +1,7 @@
 {
   "name": "cordova-amap-locate",
-  "version": "1.0.6",
-  "description": "cordova高德地图SDK",
+  "version": "1.1.0",
+  "description": "Cordova&Ionic 高德地图 Location SDK",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/van-team/cordova-amap-locate.git"
@@ -16,9 +16,5 @@
   "bugs": {
     "url": "https://github.com/van-team/cordova-amap-locate/issues"
   },
-  "homepage": "https://github.com/van-team/cordova-amap-locate#readme",
-  "devDependencies": {
-    "@angular/core": "^6.0.7",
-    "@ionic-native/core": "^4.9.0"
-  }
+  "homepage": "https://github.com/van-team/cordova-amap-locate#readme"
 }

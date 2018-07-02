@@ -1,7 +1,8 @@
 import RxSwift
 import RxCocoa
 
-@objc(AMapLocatePlugin) class AMapLocatelugin: CDVPlugin, AMapLocationManagerDelegate {
+@objc(AMapLocatePlugin)
+class AMapLocatePlugin: CDVPlugin, AMapLocationManagerDelegate {
     private var mapKey: String?
     private var locationManager: AMapLocationManager?
     private var asyncSub: AsyncSubject<CLLocation>?

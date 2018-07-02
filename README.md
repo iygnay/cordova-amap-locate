@@ -1,57 +1,77 @@
-# cordova-amap-location-kit
+# cordova-amap-locate
 
-## 安装
+## Install AMap SDK Plugin
 
-```
-> cordova plugin add cordova-amap-location-sdk --variable android_key={KEY} --variable ios_key={KEY}
-```
-
-<!-- ## Android Studio
-
-> `cordova platform add android` 之后需要使用 Android Studio进一步设置
-
-#### 设置 App Gradle
-
-```
-# 添加源 set repositories
-maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
-
-# 添加依赖 set dependency
-implementation 'com.android.support:appcompat-v7:26.1.0'
-compile "io.reactivex.rxjava2:rxjava:2.1.8" 
-``` -->
-
-<!-- ## Xcode
-
-#### 插件依赖
-
-> 插件依赖于 `swift` 与 `cocoapods`，因此需要安装一下插件
-
-```
-cordova plugin add cordova-plugin-add-swift-support cordova-plugin-cocoapod-support
+``` shell
+// Cordova
+cordova plugin add cordova-amap-locate --variable android_key={KEY} --variable ios_key={KEY}
+// Ionic
+ionic cordova plugin add cordova-amap-locate --variable android_key={KEY} --variable ios_key={KEY}
 ```
 
-#### 修改项目config.xml文件
+> In order to prevent error, at present you need to set the variable information of both Android and iOS.
 
+### Pay attention to IOS platform
+
+> Ios is not perfect, you need to continue to set the configuration in Xcode, but this problem will be resolved later
+
+The plug-in relies on `cordova-plugin-add-swift-support` and `cordova-plugin-cocoapods-support`, so it needs to be installed in the project and configured according to the instructions.
+
+``` shell
+cordova plugin add cordova-plugin-add-swift-support --save 
+cordova plugin add cordova-plugin-cocoapod-support --save
 ```
-// platform ios
-<preference name="UseSwiftLanguageVersion" value="4.0" />
-<preference name="pods_ios_min_version" value="9.0" />
-<preference name="pods_use_frameworks" value="true" />
-<pod name="RxSwift" version="4.1.1" />
-<pod name="RxCocoa" version="4.1.1" />
 
-// Set CordovaWebViewEngine
-<preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" />
+### Modify the project config.xml
+
+``` xml
+<platform name="ios">
+    ...
+    <preference name="deployment-target" value="9.0" />
+    <preference name="pods_use_frameworks" value="true" />
+    <preference name="UseSwiftLanguageVersion" value="4" />
+
+    <pod name="RxSwift" />
+    <pod name="RxCocoa" />
+    <pod name="AMap3DMap" />
+    <pod name="AMapLocation" />
+    ...
+</platform>
 ```
 
-> `cordova platform add ios` 之后需要使用 Xcode 设置编译版本与TeamID，并且需要开启后台定位更新。
+### Configuring Xcode
 
-## 使用
+#### - First of all 
 
+check Project `Signing`, if this isn't configuration, please configure the `termId`.
+
+#### - Second part
+
+check Project and Pods `Swift Lanaguage Version`, if it is `Unspecified`, you must set a swift version. If you set the version to `4.0`, you can change the `Project Format` to `Xcode 8.0`.
+
+#### - Third part
+
+check Project `Objective-C Bridging Header`，if it is normal, please add these to `Bridging-Header.h`.
+
+``` cpp
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 ```
-cordova.plugins.location.getLatlng(function(latlng){
-    // [lat:double,lng:double]
-    console.log(latlng)
-})
-``` -->
+
+#### - Last
+
+- `Background Modes` set `On`
+- selected `Location updates` 
+
+## Used in Cordova 
+
+``` javascript
+cordova.plugins.locate.getCurrentPosition(function (latlng) {
+    console.log(latlng);
+});
+// output: [lat:double,lng:double]
+```
+
+## Used in Ionic
+
+> Later Update

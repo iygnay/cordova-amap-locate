@@ -6,6 +6,7 @@
     <preference name="ANDROID_KEY"/>
     <preference name="IOS_KEY"/>
     <platform name="android">
+        <dependency id="cordova-support-kotlin"/>
         <js-module name="locate" src="www/android/locate.js">
             <clobbers target="cordova.plugins.locate"/>
         </js-module>

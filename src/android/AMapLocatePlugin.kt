@@ -76,9 +76,6 @@ class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
             json.put(it.getLatitude())
             json.put(it.getLongitude())
             callbackContext.success(json)
-        }, {
-
-        }, {
             mLocationClient!!.stopLocation()
         })
     }

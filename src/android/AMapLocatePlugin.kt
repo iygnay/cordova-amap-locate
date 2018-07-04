@@ -64,8 +64,6 @@ class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
         if (location?.errorCode == 0) {
             asyncSubject.onNext(location)
             asyncSubject.onComplete()
-        } else {
-            mLocationClient!!.startLocation()
         }
     }
 

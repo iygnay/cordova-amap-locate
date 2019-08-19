@@ -8,14 +8,15 @@ import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationClientOption.AMapLocationMode
 import com.amap.api.location.AMapLocationListener
-import io.reactivex.subjects.AsyncSubject
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import org.apache.cordova.CallbackContext
 import org.apache.cordova.CordovaPlugin
 import org.json.JSONArray
 
 class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
     private var mLocationClient: AMapLocationClient? = null
-    private val asyncSubject: AsyncSubject<AMapLocation> = AsyncSubject.create()
+    private val asyncSubject: PublishSubject<AMapLocation> = PublishSubject.create()
     private val PERMISSON_REQUESTCODE: Int = 0;
     private val checkPermission: Array<String> = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -60,21 +61,27 @@ class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
     private fun getCurrentPosition(callbackContext: CallbackContext) {
         mLocationClient!!.startLocation()
         val json = JSONArray()
-        asyncSubject.subscribe({
+        lateinit var sub: Disposable;
+        sub = asyncSubject.subscribe({
             mLocationClient!!.stopLocation()
             json.put(it.getLatitude())
             json.put(it.getLongitude())
             callbackContext.success(json)
+            sub.dispose()
         }, {
             mLocationClient!!.stopLocation()
-            callbackContext.error(0)
+            callbackContext.error(it.message)
+            sub.dispose()
         })
     }
 
     override fun onLocationChanged(location: AMapLocation?) {
         if (location?.errorCode == 0) {
             asyncSubject.onNext(location)
-            asyncSubject.onComplete()
+            // asyncSubject.onComplete()
+        } else {
+            asyncSubject.onError(Exception(location?.errorCode.toString()))
+            // asyncSubject.onComplete()
         }
     }
 }

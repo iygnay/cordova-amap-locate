@@ -14,9 +14,10 @@ import org.apache.cordova.CallbackContext
 import org.apache.cordova.CordovaPlugin
 import org.json.JSONArray
 
+class AMapLocationWrapper(val value: AMapLocation?)
 class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
     private var mLocationClient: AMapLocationClient? = null
-    private val asyncSubject: PublishSubject<AMapLocation> = PublishSubject.create()
+    private val asyncSubject: PublishSubject<AMapLocationWrapper> = PublishSubject.create()
     private val PERMISSON_REQUESTCODE: Int = 0;
     private val checkPermission: Array<String> = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -60,28 +61,24 @@ class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
 
     private fun getCurrentPosition(callbackContext: CallbackContext) {
         mLocationClient!!.startLocation()
-        val json = JSONArray()
         lateinit var sub: Disposable;
-        sub = asyncSubject.subscribe({
+        sub = asyncSubject.subscribe {
             mLocationClient!!.stopLocation()
-            json.put(it.getLatitude())
-            json.put(it.getLongitude())
-            callbackContext.success(json)
+
+            if (it.value?.errorCode == 0) {
+                val json = JSONArray()
+                json.put(it.value?.latitude)
+                json.put(it.value?.longitude)
+                callbackContext.success(json)
+            } else {
+                callbackContext.error(it.value?.errorCode.toString())
+            }
+
             sub.dispose()
-        }, {
-            mLocationClient!!.stopLocation()
-            callbackContext.error(it.message)
-            sub.dispose()
-        })
+        }
     }
 
     override fun onLocationChanged(location: AMapLocation?) {
-        if (location?.errorCode == 0) {
-            asyncSubject.onNext(location)
-            // asyncSubject.onComplete()
-        } else {
-            asyncSubject.onError(Exception(location?.errorCode.toString()))
-            // asyncSubject.onComplete()
-        }
+        asyncSubject.onNext(AMapLocationWrapper(location));
     }
 }

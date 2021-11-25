@@ -29,7 +29,7 @@ class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
 
     override fun pluginInitialize() {
         super.pluginInitialize()
-        if (cordova.getActivity().getApplicationInfo().targetSdkVersion >= 23 &&
+        if (cordova.activity.applicationInfo.targetSdkVersion >= 23 &&
                 Build.VERSION.SDK_INT >= 23) checkPermissions()
         initAMapLocation()
     }
@@ -43,13 +43,17 @@ class AMapLocatePlugin : CordovaPlugin(), AMapLocationListener {
     }
 
     private fun initAMapLocation() {
-        val mLocationClientOption = AMapLocationClientOption()
-        mLocationClientOption.setOnceLocation(true)
-        mLocationClientOption.setLocationMode(AMapLocationMode.Hight_Accuracy)
+        val context = cordova.activity.application.applicationContext
+        AMapLocationClient.updatePrivacyShow(context, true, true)
+        AMapLocationClient.updatePrivacyAgree(context, true)
 
-        mLocationClient = AMapLocationClient(cordova.activity.application.applicationContext)
+        val mLocationClientOption = AMapLocationClientOption()
+        mLocationClientOption.isOnceLocation = true
+        mLocationClientOption.locationMode = AMapLocationMode.Hight_Accuracy
+
+        mLocationClient = AMapLocationClient(context)
         mLocationClient!!.setLocationOption(mLocationClientOption);
-        mLocationClient!!.setLocationListener(this);
+        mLocationClient!!.setLocationListener(this)
     }
 
     override fun execute(action: String?, args: JSONArray?, callbackContext: CallbackContext?): Boolean {

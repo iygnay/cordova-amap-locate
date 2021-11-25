@@ -1,6 +1,6 @@
 {
   "name": "cordova-amap-locate",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Cordova&Ionic 高德地图 Location SDK",
   "repository": {
     "type": "git",
